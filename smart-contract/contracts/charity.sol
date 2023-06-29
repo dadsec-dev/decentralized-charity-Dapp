@@ -33,6 +33,10 @@ contract charity {
     event projectFunded (uint256 projectId, address contributor, uint256 amount);
     event projectClosed(uint256 projectId, bool isClosed);
 
+
+    error projectEnded__();
+
+
     function createProject (string memory _image, string memory _projectName, string memory _description, uint256 _goal, uint256 _starttime, uint256 _endtime) public {
         require(msg.sender != address(0), "no 0 addr allowed");
         require(_goal > 0, "goal cant be 0");
@@ -72,6 +76,8 @@ contract charity {
 
 
 
+        } else {
+           revert projectEnded__();
         }
 
 
