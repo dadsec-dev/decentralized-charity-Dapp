@@ -6,7 +6,7 @@ require("@nomicfoundation/hardhat-verify");
 
 require('dotenv').config();
 
-const {PRIVATE_KEY_1, PRIVATE_KEY_2, ETHERSCAN_APIKEY} = process.env;
+const {PRIVATE_KEY_1, PRIVATE_KEY_2, URL} = process.env;
 
 module.exports = {
 
@@ -24,7 +24,7 @@ module.exports = {
   networks: {
     hardhat: {},
     sepolia: {
-      url: `https://sepolia.infura.io/v3/8bc6a127f3f44587a87c232219da3876`,
+      url: `https://sepolia.infura.io/v3/${URL}`,
       accounts: [PRIVATE_KEY_1, PRIVATE_KEY_2],
     },
 
