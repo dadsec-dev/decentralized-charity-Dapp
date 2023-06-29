@@ -32,13 +32,13 @@ contract charity {
     uint256[] public allProjectsArray;
     uint256 public PlatformFee = 0.01 ether;
 
+
     event projectCreated (uint256 projectId, address creator, uint256 goalAmount);
     event projectFunded (uint256 projectId, address contributor, uint256 amount);
     event projectClosed(uint256 projectId, bool isClosed);
     event ContributionsWithdrawn(uint256 projectId, address PaidTo, uint256 amount, uint256 platformFee);
 
-
-    error projectEnded__();
+    
 
 
     function createProject (string memory _image, string memory _projectName, string memory _description, uint256 _goal, uint256 _starttime, uint256 _endtime) public {
@@ -82,9 +82,7 @@ contract charity {
 
 
 
-        } else {
-           revert projectEnded__();
-        }
+        } 
 
         if (block.timestamp >= project_.endtime) {
             project_.isStarted == false;
@@ -182,6 +180,11 @@ contract charity {
         require(platformfeesuccess, "Fee tr failed");
 
         emit ContributionsWithdrawn(projectId_, msg.sender, value_, platformShare);
+    }
+
+    receive() external payable {
+        // Handle the received Ether here
+        // This function is called when the contract receives Ether with no data
     }
 
 
