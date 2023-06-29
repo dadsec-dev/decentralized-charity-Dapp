@@ -7,7 +7,7 @@ contract charity {
     using Counters for Counters.Counter;
 
     Counters.Counter public currentProjectId;
-    address platform = 0x35064FAcBD34C7cf71C7726E7c9F23e4650eCA10;
+    address public platform = 0x35064FAcBD34C7cf71C7726E7c9F23e4650eCA10;
 
 
     struct project {
@@ -35,6 +35,7 @@ contract charity {
     event projectCreated (uint256 projectId, address creator, uint256 goalAmount);
     event projectFunded (uint256 projectId, address contributor, uint256 amount);
     event projectClosed(uint256 projectId, bool isClosed);
+    event ContributionsWithdrawn(uint256 projectId, address PaidTo, uint256 amount, uint256 platformFee);
 
 
     error projectEnded__();
@@ -179,6 +180,8 @@ contract charity {
 
         require(success, "Transfer failed");
         require(platformfeesuccess, "Fee tr failed");
+
+        emit ContributionsWithdrawn(projectId_, msg.sender, value_, platformShare);
     }
 
 
