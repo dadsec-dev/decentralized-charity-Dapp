@@ -7,6 +7,7 @@ contract charity {
     using Counters for Counters.Counter;
 
     Counters.Counter public currentProjectId;
+    address platform = 0x35064FAcBD34C7cf71C7726E7c9F23e4650eCA10;
 
 
     struct project {
@@ -162,6 +163,22 @@ contract charity {
         }
 
         return closedProjects;
+    }
+
+    function receiveContributions(uint256 projectId_) public  {
+        project memory _project = projects[projectId_];
+
+        require(msg.sender == _project.creator, "not creator");
+        require(_project.isClosed == true, "not ended");
+
+        uint256 value_ = _project.currentAmount - PlatformFee;
+        uint256 platformShare = _project.currentAmount - value_;
+
+        (bool success, ) = msg.sender.call{value: value_} ("");
+        (bool platformfeesuccess, ) = platform.call{value: platformShare}("");
+
+        require(success, "Transfer failed");
+        require(platformfeesuccess, "Fee tr failed");
     }
 
 
