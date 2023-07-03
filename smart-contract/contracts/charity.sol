@@ -2,9 +2,12 @@
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/utils/Counters.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "./charityRewardToken.sol";
 contract charity {
 
     using Counters for Counters.Counter;
+    IERC20 private charityToken;
 
     Counters.Counter public currentProjectId;
     address public platform = 0x35064FAcBD34C7cf71C7726E7c9F23e4650eCA10;
@@ -79,6 +82,7 @@ contract charity {
             // project_.contributions = project_.contributions++;
             project_.contributors.push(msg.sender);
             project_.currentAmount += msg.value;
+            charityToken.mint(msg.sender, 1000);
 
 
 
@@ -88,6 +92,9 @@ contract charity {
             project_.isStarted == false;
             project_.isClosed == true;
         }
+
+        
+
 
         emit projectFunded(projectId_, msg.sender, msg.value);
 
@@ -180,6 +187,13 @@ contract charity {
         require(platformfeesuccess, "Fee tr failed");
 
         emit ContributionsWithdrawn(projectId_, msg.sender, value_, platformShare);
+    }
+
+
+    function setCharityTokenAddress(IERC20 account) public {
+        require(msg.sender == platform, "Not platform");
+
+        charityToken = account;
     }
 
     receive() external payable {
