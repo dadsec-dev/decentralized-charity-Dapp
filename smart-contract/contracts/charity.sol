@@ -2,12 +2,12 @@
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/utils/Counters.sol";
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "../interfaces/interface.sol";
 import "./charityRewardToken.sol";
 contract charity {
 
     using Counters for Counters.Counter;
-    IERC20 private charityToken;
+    IREWARDERC20 private charityToken;
 
     Counters.Counter public currentProjectId;
     address public platform = 0x35064FAcBD34C7cf71C7726E7c9F23e4650eCA10;
@@ -190,7 +190,7 @@ contract charity {
     }
 
 
-    function setCharityTokenAddress(IERC20 account) public {
+    function setCharityTokenAddress(IREWARDERC20 account) public {
         require(msg.sender == platform, "Not platform");
 
         charityToken = account;
