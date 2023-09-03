@@ -4,6 +4,7 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "../interfaces/interface.sol";
 import "./charityRewardToken.sol";
+
 contract charity {
 
     using Counters for Counters.Counter;

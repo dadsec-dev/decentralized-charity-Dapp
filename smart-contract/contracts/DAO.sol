@@ -47,17 +47,17 @@ contract charityDAO {
         require(block.timestamp <= _endTime && _startTime < _endTime, "Invalid time setting");
 
         proposalID.increment();
-
+        
         uint256 currentProposal = proposalID.current();
-
+         
         proposal memory proposalCreation = proposalDetails[currentProposal];
-
+         
         proposalCreation.proposer = msg.sender;
         proposalCreation.votingStart = _startTime;
         proposalCreation.votingEnd = _endTime;
         proposalCreation.description = _text;
-
-
+        
+       
     }
 
 
@@ -107,5 +107,5 @@ contract charityDAO {
         return proposalDetails[_proposalId].no;
     }
 
-    
+
 }
